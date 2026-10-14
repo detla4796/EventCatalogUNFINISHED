@@ -1,0 +1,47 @@
+﻿@model EventCatalog.Models.EventFormViewModel
+@{ ViewBag.Title = "Создание мероприятия"; }
+
+<h2>Создание мероприятия</h2>
+
+@using (Html.BeginForm("Create", "Events", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 4 })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.StartDate)
+        @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-ddTHH:mm}", new { type = "datetime-local", @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Price)
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Seats)
+        @Html.TextBoxFor(m => m.Seats, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Seats, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoryId)
+        @Html.DropDownList("CategoryId", null, "— выберите —", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Сохранить</button>
+    @Html.ActionLink("Отмена", "Manage", null, new { @class = "btn btn-default" })
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

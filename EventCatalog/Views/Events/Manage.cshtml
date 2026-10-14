@@ -1,0 +1,42 @@
+﻿@model List<EventCatalog.Models.Event>
+@{ ViewBag.Title = "Управление мероприятиями"; }
+
+<h2>Управление мероприятиями</h2>
+
+<p>@Html.ActionLink("Создать мероприятие", "Create", null, new { @class = "btn btn-success" })</p>
+
+<form id="antiForgeryForm">
+    @Html.AntiForgeryToken()
+</form>
+
+<div id="manageMsg" class="text-danger"></div>
+
+<table class="table table-striped" id="manageTable" data-toggle-url="@Url.Action("TogglePublish")">
+    <tr>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Категория</th>
+        <th>Дата</th>
+        <th>Статус</th>
+        <th></th>
+    </tr>
+    @foreach (var e in Model)
+    {
+        <tr>
+            <td>@e.Id</td>
+            <td>@e.Title</td>
+            <td>@e.Category.Name</td>
+            <td>@e.StartDate.ToString("dd.MM.yyyy HH:mm")</td>
+            <td class="status">@(e.IsPublished ? "Опубликовано" : "Черновик")</td>
+            <td>
+                <button type="button" class="btn btn-xs btn-default toggle-publish" data-id="@e.Id">Опубликовать / скрыть</button>
+                @Html.ActionLink("Изменить", "Edit", new { id = e.Id })
+                @Html.ActionLink("Удалить", "Delete", new { id = e.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    <script src="~/Scripts/app/toggle-publish.js"></script>
+}

@@ -1,0 +1,30 @@
+﻿@model EventCatalog.Models.Event
+@{ ViewBag.Title = Model.Title; }
+
+<h2>@Model.Title</h2>
+
+<dl class="dl-horizontal">
+    <dt>Категория</dt>
+    <dd>@Model.Category.Name</dd>
+    <dt>Описание</dt>
+    <dd>@Model.Description</dd>
+    <dt>Начало</dt>
+    <dd>@Model.StartDate.ToString("dd.MM.yyyy HH:mm")</dd>
+    <dt>Цена</dt>
+    <dd>@Model.Price.ToString("0.##")</dd>
+    <dt>Мест</dt>
+    <dd>@Model.Seats</dd>
+</dl>
+
+<button id="checkSeats" class="btn btn-primary"
+        data-url="@Url.Action("CheckSeats", new { id = Model.Id })">
+    Проверить наличие мест
+</button>
+
+<div id="seatsResult" class="alert alert-info" style="display:none; margin-top:10px"></div>
+
+<p style="margin-top:15px">@Html.ActionLink("← К списку", "Index")</p>
+
+@section Scripts {
+    <script src="~/Scripts/app/seats-check.js"></script>
+}

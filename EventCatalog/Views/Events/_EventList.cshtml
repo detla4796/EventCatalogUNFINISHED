@@ -1,0 +1,35 @@
+﻿@model IEnumerable<EventCatalog.Models.Event>
+
+@if (ViewBag.ServerTime != null)
+{
+    <p class="text-muted">Время на сервере: @ViewBag.ServerTime</p>
+}
+
+@if (!Model.Any())
+{
+    <p>Мероприятий не найдено.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <tr>
+            <th>Название</th>
+            <th>Категория</th>
+            <th>Дата</th>
+            <th>Цена</th>
+            <th>Мест</th>
+            <th></th>
+        </tr>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Title</td>
+                <td>@e.Category.Name</td>
+                <td>@e.StartDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@e.Price.ToString("0.##")</td>
+                <td>@e.Seats</td>
+                <td>@Html.ActionLink("Подробнее", "Details", new { id = e.Id })</td>
+            </tr>
+        }
+    </table>
+}
